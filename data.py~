@@ -1,0 +1,19 @@
+import matplotlib
+matplotlib.use('Agg')
+import os
+import nrrd #pip install pynrrd, if pynrrd is not already installed
+import numpy as np
+import matplotlib.pyplot as plt
+
+#load all the .nrrd files into one list
+def getData():
+    images = [ ]
+    for filen in os.listdir('nrrd'):
+        if filen.endswith('.nrrd'):
+            print(filen)
+            data, header = nrrd.read(os.path.join('nrrd/'+ filen))
+            images.append(data)
+    return images
+    
+    
+
