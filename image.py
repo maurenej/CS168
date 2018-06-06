@@ -25,16 +25,4 @@ slice_2 = img_14[:, :, 10]
 print('Imported list length:')
 print(len(imglist))
 
-def calculate_score():
-    image_scores = [ ]
-    score = 0
-    for a in range (23,30):
-        img = images[a]
-        for i in range (0, len(img)):
-            for j in range (0, len(img)):
-                for k in range (0, len(img[0][0])):
-                    if img[i][j][k] > 0:
-                        score = score + 1
-        image_scores.append(score)
-        score = 0
-    print(image_scores)
+
