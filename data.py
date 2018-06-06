@@ -14,11 +14,11 @@ ratios = [0.408, 0.446, 0.673, 0.497, 0.495, 0.737, 0.492, 0.504, 0.331, 0.414, 
 #tuples from nrrdDx
 tuples = [[64539, 0.408], [63192, 0.446], [84664, 0.673], [61977, 0.497], [68893, 0.495], [201945, 0.737], [41470, 0.492], [66649, 0.504], [69547, 0.331], [59223, 0.414], [123213, 0.543], [114652, 0.579], [67135, 0.556], [39996, 0.512], [80799, 0.348], [52717, 0.498], [41811, 0.467], [185080, 0.915], [51173, 0.637], [132946, 0.531], [64459, 0.715], [212707, 0.791], [96176, 0.734], [60284, 0.449], [73844, 0.621], [47204, 0.427], [140342, 0.679], [74520, 0.490], [70296, 0.593], [232686, 0.783]]
 
-scores3T = [32253, 52022, 50194, 57416, 32027, 40763, 11929, 33886, 91391, 33661]
+scores3T = [32253, 52022, 50194, 57416, 32027, 40763, 11929, 33886, 91391, 33661, 31791, 48491, 77672, 21031, 34911, 42188, 222554, 25277, 47111, 17066, 66978, 36140, 52066, 75667, 46712, 66670, 53596, 68074, 46770, 27516]
 
-cz_scores3T = [26451, 38265, 35187, 44365, 21413, 32050, 7294, 30071, 87558, 17010]
-
-ratios3T = [0.82, 0.736, 0.701, 0.773, 0.669, 0.786, 0.611, 0.887, 0.958, 0.505]
+cz_scores3T = [26451, 38265, 35187, 44365, 21413, 32050, 7294, 30071, 87558, 17010, 28073, 34054, 63883, 11984, 21346, 33003, 214263, 9850, 47111, 9020, 56663, 23940, 42161, 71961, 40269, 57302, 35365, 52073, 35761, 12110]
+            
+ratios3T = [0.82, 0.736, 0.701, 0.773, 0.669, 0.786, 0.611, 0.887, 0.958, 0.505, 0.883, 0.702, 0.822, 0.57, 0.611, 0.782, 0.963, 0.39, 1.0, 0.529, 0.846, 0.662, 0.81, 0.951, 0.862, 0.859, 0.66, 0.765, 0.765, 0.44]
 #load all the .nrrd files into one list
 def getData(datatype):
     
@@ -55,7 +55,7 @@ def getRatios():
 def getTuples():
     return tuples
 
-def calculateScore(datatype, start, end):
+def calculateScores(datatype, start, end):
     images = getData(datatype)
     image_scores = [ ]
     score = 0
@@ -104,17 +104,18 @@ def createData():
     f.write("\r\n")
     f.close
 
-print('Number of Total Volume Scores')
-print(len(scores))
-print('Number of CZ Volume Scores')
-print(len(cz_scores))
+#print('Number of Total Volume Scores')
+#print(len(scores))
+#print('Number of CZ Volume Scores')
+#print(len(cz_scores))
+print('Scores')
+#calculateScores(1, 20, 30)
+print('CZScores')
+#calculateCZ(1,20,30)
 calculateRatios(1)
 print('Number of Score Ratios')
 print(len(ratios))
 print('Number of Tuples')
 print(len(tuples))
 #createData()
-<<<<<<< HEAD
 
-=======
->>>>>>> cba7314411e42ee4b5b3acd1219400bcde45dfd1
