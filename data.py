@@ -114,4 +114,7 @@ print(len(ratios))
 print('Number of Tuples')
 print(len(tuples))
 #createData()
+<<<<<<< HEAD
 
+=======
+>>>>>>> cba7314411e42ee4b5b3acd1219400bcde45dfd1
