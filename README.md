@@ -1,6 +1,6 @@
 ## Automated Prostate Tumor Classification from MRI Segmentations
 
-Our code for CS 168: Medical Imaging taught by Dr. Scalzo. Our project aimed to automatically classify numerous cases of prostate cancer into few clusters based on the ratio of the central gland and the peripheral zone. The 3D segmentation data was retrived from https://wiki.cancerimagingarchive.net/display/Public/PROSTATE-DIAGNOSIS 
+Our code for CS 168: Medical Imaging taught by Dr. Scalzo. Our project aimed to automatically classify numerous cases of prostate cancer into few clusters based on the ratio of the central gland and the peripheral zone. The 3D segmentation data was retrieved from https://wiki.cancerimagingarchive.net/display/Public/PROSTATE-DIAGNOSIS 
 
 ### Approach
 
@@ -33,8 +33,9 @@ You can see how each of our data points are clustered and the performances of th
 The algorithm that we use is KNN (K-Nearest-Neightbors) which is a form of supervised learning to relate X to Y, in our case, [total volume, ratio] to cluster number. More info can be found here: http://scikit-learn.org/stable/modules/neighbors.html
 
 ```bash
-$ python3 cluster.py <n or y> <n or y>
+$ python3 cluster.py <n or y> <n or y> <n or y>
 ```
 
 The first argument is the silent option. `n` will mute status info from the console while `y` will display to the console. 
 The second argument is the plot option. `n` will not display plots. `y` will display the plots that show color coded cluster groups of each data point. 
+The third argument is the default train/test data option. `n` will generate a new combination of test and training data everytime it is run. `y` will use the default test and training data.
