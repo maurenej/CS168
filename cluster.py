@@ -58,14 +58,18 @@ def predict_test(train_data, train_cluster, test_data, test_cluster, k):
 
 def cross_validate_hyperparameter():
     train, test = get_data()
-    print("Cross Validation Scores")
+    avg_scores = []
     for i in range (1, 10):
         clusters, predictions = cluster_data(train, test, i,plot=False)
         clf = KNeighborsClassifier(i)
         scores = cross_val_score(clf, train, clusters, cv=3)
-        print(scores)
-    print("End of Cross Validation Scores")
-    return 3
+        avg_scores.append(np.mean(scores))
+        
+    print("Average Cross Validation Scores")
+    print(avg_scores)
+    max_index = avg_scores.index(max(avg_scores)) + 1
+    print(max_index)
+    return max_index
 
 def score_cluster(cluster_prediction, kkn_prediction):
 
