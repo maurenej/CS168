@@ -99,7 +99,7 @@ def cluster_images(silent=True, plot=False, defdata=False):
     minimum_k = 0
     best_cluster = []
     # Try KMeans clustering with 2, 3, 4, and 5 clusters
-    for i in np.arange(2,5):
+    for i in np.arange(3,5):
         train_cluster, test_cluster = cluster_data(train_data, test_data, i, silent, plot) 
         # Cross validate for the hyperparameter k to run Nearest Neighbors with
         k = cross_validate_hyperparameter()
@@ -112,13 +112,9 @@ def cluster_images(silent=True, plot=False, defdata=False):
             minimum_error = cluster_score
             minimum_k = i
             best_cluster = test_cluster
-            print("BEST CLUSTER: ")
-            print(test_cluster)
-            print("MIN K: ")
-            print(minimum_k)
 
-    if not silent:
-        print(("The calculated best grouping of the data involves {k} clusters.").format(k=minimum_k))
+    if silent == False:
+        print(("The calculated grouping with a minimized erroro of {x} involves {k} clusters").format(x = minimum_error, k=minimum_k))
 
     plt.subplot(221)
     plt.scatter(test_data[:,0], test_data[:, 1], c=best_cluster)
