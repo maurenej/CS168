@@ -1,6 +1,7 @@
 import os
 import nrrd #pip install pynrrd, if pynrrd is not already installed
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 #scores from nrrdDx
 scores = [64539, 63192, 84664, 61977, 68893, 201945, 41470, 66649, 69547, 59223, 123213, 114652, 67135, 39996, 80799, 52717, 41811, 185080, 51173, 132946, 64459, 212707, 96176, 60284, 73844, 47204, 140342, 74520, 70296, 232686]
@@ -19,6 +20,10 @@ scores3T = [32253, 52022, 50194, 57416, 32027, 40763, 11929, 33886, 91391, 33661
 cz_scores3T = [26451, 38265, 35187, 44365, 21413, 32050, 7294, 30071, 87558, 17010, 28073, 34054, 63883, 11984, 21346, 33003, 214263, 9850, 47111, 9020, 56663, 23940, 42161, 71961, 40269, 57302, 35365, 52073, 35761, 12110]
             
 ratios3T = [0.82, 0.736, 0.701, 0.773, 0.669, 0.786, 0.611, 0.887, 0.958, 0.505, 0.883, 0.702, 0.822, 0.57, 0.611, 0.782, 0.963, 0.39, 1.0, 0.529, 0.846, 0.662, 0.81, 0.951, 0.862, 0.859, 0.66, 0.765, 0.765, 0.44]
+
+tuples3T = [[32253, 0.820], [52022, 0.736], [50194, 0.701], [57416, 0.773], [32027, 0.669], [40763, 0.786], [11929, 0.611], [33886, 0.887], [91391, 0.958], [33661, 0.505], [31791, 0.883], [48491, 0.702], [77672, 0.822], [21031, 0.570], [34911, 0.611], [42188, 0.782], [222554, 0.963], [25277, 0.390], [47111, 1.000], [17066, 0.529], [66978, 0.846], [36140, 0.662], [52066, 0.810], [75667, 0.951], [46712, 0.862], [66670, 0.859], [53596, 0.660], [68074, 0.765], [46770, 0.765], [27516, 0.440]] 
+
+
 #load all the .nrrd files into one list
 def getData(datatype):
     
@@ -54,6 +59,11 @@ def getRatios():
 
 def getTuples():
     return tuples
+
+def getTrainTestX():
+    X = tuples + tuples3T
+    X_train, X_test = train_test_split(X, test_size=0.5)
+    return [X_train, X_test]
 
 def calculateScores(datatype, start, end):
     images = getData(datatype)
@@ -96,26 +106,29 @@ def calculateRatios(datatype):
             
     print(ratios)
 
-def createData():
-    f= open("data.txt","w+")
-    for i in range(len(scores)):
-        f.write("[%d, " % scores[i]) 
-        f.write("%.3f], " % ratios[i]) 
-    f.write("\r\n")
-    f.close
+def createTuples(datatype):
+    if datatype == 0:
+        f= open("dataDx.txt","w+")
+        for i in range(len(scores)):
+            f.write("[%d, " % scores[i]) 
+            f.write("%.3f], " % ratios[i]) 
+        f.write("\r\n")
+        f.close
+    elif datatype == 1:
+        f= open("data3T.txt","w+")
+        for i in range(len(scores3T)):
+            f.write("[%d, " % scores3T[i]) 
+            f.write("%.3f], " % ratios3T[i]) 
+        f.write("\r\n")
+        f.close
 
 #print('Number of Total Volume Scores')
 #print(len(scores))
 #print('Number of CZ Volume Scores')
 #print(len(cz_scores))
-print('Scores')
-#calculateScores(1, 20, 30)
-print('CZScores')
-#calculateCZ(1,20,30)
-calculateRatios(1)
-print('Number of Score Ratios')
-print(len(ratios))
-print('Number of Tuples')
-print(len(tuples))
-#createData()
+train, test = getTrainTestX()
+print("Train")
+print(train)
+print("Test")
+print(test)
 
