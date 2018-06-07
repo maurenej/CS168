@@ -104,12 +104,16 @@ def cluster_images(silent=True, plot=False):
             minimum_error = cluster_score
             minimum_k = i
             best_cluster = test_cluster
+            print("BEST CLUSTER: ")
+            print(test_cluster)
+            print("MIN K: ")
+            print(minimum_k)
 
     if not silent:
-        print(("The calculated best grouping of the data involves {k} clusters.").format(k=k))
+        print(("The calculated best grouping of the data involves {k} clusters.").format(k=minimum_k))
 
     plt.subplot(221)
-    plt.scatter(test_data[:,0], test_data[:, 1], c=test_cluster)
+    plt.scatter(test_data[:,0], test_data[:, 1], c=best_cluster)
     plt.show()
 
 
