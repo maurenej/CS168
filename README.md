@@ -11,10 +11,10 @@ The main points that we are concerned with for each 3D image are the total volum
 CS168/
 ---nrrd3T/        (.nrrd segmentation files 1)
 ---nrrdDx/        (.nrrd segmentation files 2)
----cluster.py     (code for clustering data)
+---cluster.py     (code to cluster data)
 ---data.py        (code to generate and retrieve data from .nrrd files)
----data3T.txt     (holds tuple data for nrrd3T)
----dataDx.txt     (holds tuple data for nrrdDx)
+---data3T.txt     (holds tuple data from nrrd3T)
+---dataDx.txt     (holds tuple data from nrrdDx)
 ```
 ### Installation
 
