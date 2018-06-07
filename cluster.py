@@ -47,7 +47,7 @@ def cluster_data(train_data, test_data, k, silent=True, plot=False):
     return clusters, predictions
 
 def predict_test(train_data, train_cluster, test_data, test_cluster, k):
-    
+    print(("K = {k}").format(k=k))
     clf = KNeighborsClassifier(k)
     clf.fit(train_data, train_cluster)
     prediction = clf.predict(test_data)
@@ -59,7 +59,7 @@ def predict_test(train_data, train_cluster, test_data, test_cluster, k):
 def cross_validate_hyperparameter():
     train, test = get_data()
     avg_scores = []
-    for i in range (1, 10):
+    for i in range (2, 10):
         clusters, predictions = cluster_data(train, test, i,plot=False)
         clf = KNeighborsClassifier(i)
         scores = cross_val_score(clf, train, clusters, cv=3)
@@ -67,9 +67,9 @@ def cross_validate_hyperparameter():
         
     print("Average Cross Validation Scores")
     print(avg_scores)
-    max_index = avg_scores.index(max(avg_scores)) + 1
+    max_index = avg_scores.index(max(avg_scores)) + 2
     print(max_index)
-    return max_index
+    return max_index 
 
 def score_cluster(cluster_prediction, kkn_prediction):
 
@@ -81,23 +81,6 @@ def cluster_images(silent=True, plot=False, defdata=False):
     train_data, test_data = get_data(defdata)
     train_data = np.array(train_data)
     test_data = np.array(test_data)
-    
-
-    # # Create the initial labels for the training and test data
-    # # We start off with a hyperparameter of k=3 
-    # train_cluster, test_cluster = cluster_data(train_data, test_data, 3, silent, plot) 
-    # #test_cluster = np.array(cluster_test_data(test_data, 3, silent, plot))
-
-    # # Cross validate for the hyperparameter k to run Nearest Neighbors with
-    # k = cross_validate_hyperparameter()
-
-    # # Use Nearest Neighbors classifier to predict the clusters of test data and score the prediction
-    # kkn_prediction = predict_test(train_data, train_cluster, test_data, test_cluster, k)
-    
-    # # Compare test cluster with the KNN
-    # # This cluster score is how much the predictions made by KNN and clustering
-    # cluster_score = score_cluster(test_cluster, kkn_prediction)
-    # print(cluster_score)
 
     minimum_error = sys.maxsize
     minimum_k = 0
@@ -114,11 +97,13 @@ def cluster_images(silent=True, plot=False, defdata=False):
         cluster_score = score_cluster(test_cluster, kkn_prediction)
         if cluster_score < minimum_error:
             minimum_error = cluster_score
+            print("MIN ERROR")
+            print(minimum_error)
             minimum_k = i
             best_cluster = test_cluster
 
     if silent == False:
-        print(("The calculated grouping with a minimized erroro of {x} involves {k} clusters").format(x = minimum_error, k=minimum_k))
+        print(("The calculated grouping with a minimized error of {x} involves {k} clusters").format(x = minimum_error, k=minimum_k))
 
     plt.subplot(221)
     plt.scatter(test_data[:,0], test_data[:, 1], c=best_cluster)
