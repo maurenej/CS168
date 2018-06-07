@@ -39,21 +39,6 @@ def cluster_data(train_data, test_data, k, silent=True, plot=False):
 
     return clusters, predictions
 
-#def predict_test_data(test_data, k, silent=True, plot=False):
-    
-    #if silent == False:
-        #print(("We will be fitting the test data to {k} clusters.").format(k=k))
-
-    #kmeans = KMeans(n_clusters = k, random_state=0).fit(test_data)
-    
-    #clusters = kmeans.labels_
-    
-    #if plot == True:
-        #plt.subplot(221)
-        #plt.scatter(test_data[:, 0], test_data[:, 1], c=kmeans.labels_)
-        #plt.show()
-    #return clusters
-
 def predict_test(train_data, train_cluster, test_data, test_cluster, k):
     
     clf = KNeighborsClassifier(k)
@@ -86,21 +71,52 @@ def cluster_images(silent=True, plot=False):
     train_data = np.array(train_data)
     test_data = np.array(test_data)
 
-    # Create the initial labels for the training and test data
-    # We start off with a hyperparameter of k=3 
-    train_cluster, test_cluster = cluster_data(train_data, test_data, 3, silent, plot) 
-    #test_cluster = np.array(cluster_test_data(test_data, 3, silent, plot))
+    # # Create the initial labels for the training and test data
+    # # We start off with a hyperparameter of k=3 
+    # train_cluster, test_cluster = cluster_data(train_data, test_data, 3, silent, plot) 
+    # #test_cluster = np.array(cluster_test_data(test_data, 3, silent, plot))
 
-    # Cross validate for the hyperparameter k to run Nearest Neighbors with
-    k = cross_validate_hyperparameter()
+    # # Cross validate for the hyperparameter k to run Nearest Neighbors with
+    # k = cross_validate_hyperparameter()
 
-    # Use Nearest Neighbors classifier to predict the clusters of test data and score the prediction
-    kkn_prediction = predict_test(train_data, train_cluster, test_data, test_cluster, k)
+    # # Use Nearest Neighbors classifier to predict the clusters of test data and score the prediction
+    # kkn_prediction = predict_test(train_data, train_cluster, test_data, test_cluster, k)
     
-    # Compare test cluster with the KNN
-    # This cluster score is how much the predictions made by KNN and clustering
-    cluster_score = score_cluster(test_cluster, kkn_prediction)
-    print(cluster_score)
+    # # Compare test cluster with the KNN
+    # # This cluster score is how much the predictions made by KNN and clustering
+    # cluster_score = score_cluster(test_cluster, kkn_prediction)
+    # print(cluster_score)
+
+    minimum_error = sys.maxsize
+    minimum_k = 0
+    best_cluster = []
+    # Try KMeans clustering with 2, 3, 4, and 5 clusters
+    for i in np.arange(2,5):
+        train_cluster, test_cluster = cluster_data(train_data, test_data, i, silent, plot) 
+        # Cross validate for the hyperparameter k to run Nearest Neighbors with
+        k = cross_validate_hyperparameter()
+        # Use Nearest Neighbors classifier to predict the clusters of test data and score the prediction
+        kkn_prediction = predict_test(train_data, train_cluster, test_data, test_cluster, k)
+        # Compare test cluster with the KNN
+        # This cluster score is how much the predictions made by KNN and clustering
+        cluster_score = score_cluster(test_cluster, kkn_prediction)
+        if cluster_score < minimum_error:
+            minimum_error = cluster_score
+            minimum_k = i
+            best_cluster = test_cluster
+            print("BEST CLUSTER: ")
+            print(test_cluster)
+            print("MIN K: ")
+            print(minimum_k)
+
+    if not silent:
+        print(("The calculated best grouping of the data involves {k} clusters.").format(k=minimum_k))
+
+    plt.subplot(221)
+    plt.scatter(test_data[:,0], test_data[:, 1], c=best_cluster)
+    plt.show()
+
+
 
 if __name__== "__main__":
     s = sys.argv[1] == 'y'
