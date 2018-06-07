@@ -36,6 +36,6 @@ The algorithm that we use is KNN (K-Nearest-Neightbors) which is a form of super
 $ python3 cluster.py <n or y> <n or y> <n or y>
 ```
 
-The first argument is the silent option. `n` will mute status info from the console while `y` will display to the console. 
-The second argument is the plot option. `n` will not display plots. `y` will display the plots that show color coded cluster groups of each data point. 
+The first argument is the silent option. `n` will mute status info from the console while `y` will display to the console.  
+The second argument is the plot option. `n` will not display plots. `y` will display the plots that show color coded cluster groups of each data point.  
 The third argument is the default train/test data option. `n` will generate a new combination of test and training data everytime it is run. `y` will use the default test and training data.
