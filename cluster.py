@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 from sklearn.datasets import load_digits
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import scale
-<<<<<<< HEAD
+
 from sklearn import linear_model
 
 train_data = data.getTuples()
@@ -18,13 +18,13 @@ from sklearn.linear_model import LogisticRegression
 def get_train_data():
     #return np.array(data.getTraining())
     return np.array(data.getTuples())
->>>>>>> cba7314411e42ee4b5b3acd1219400bcde45dfd1
+
 
 def get_test_data():
     #return np.array(data.getTesting())
     return np.array(data.getTuples())
 
-<<<<<<< HEAD
+
 clusters = kmeans.labels_
 
 score0 = []
