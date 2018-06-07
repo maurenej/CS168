@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import data
@@ -6,6 +7,7 @@ from sklearn.preprocessing import scale
 from sklearn import linear_model
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import cross_val_score
 
 def get_data():
     #return np.array(data.getTraining())
@@ -63,7 +65,15 @@ def predict_test(train_data, train_cluster, test_data, test_cluster, k):
     return prediction
 
 def cross_validate_hyperparameter():
-    return 1
+    train, test = get_data()
+    print("Cross Validation Scores")
+    for i in range (1, 10):
+        clusters, predictions = cluster_data(train, test, i,plot=False)
+        clf = KNeighborsClassifier(i)
+        scores = cross_val_score(clf, train, clusters, cv=3)
+        print(scores)
+    print("End of Cross Validation Scores")
+    return 3
 
 def score_cluster(cluster_prediction, kkn_prediction):
 
@@ -93,4 +103,6 @@ def cluster_images(silent=True, plot=False):
     print(cluster_score)
 
 if __name__== "__main__":
-    cluster_images(silent=False, plot=True)
+    s = sys.argv[1] == 'y'
+    p = sys.argv[2] == 'y'
+    cluster_images(silent=s, plot=p)
